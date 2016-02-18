@@ -14,9 +14,23 @@ type VoteStats struct {
   ChanceDemocrat   int
 }
 
+type Vote struct {
+  Total       int
+  VoteDem     int
+  VoteRep     int
+}
+
+type Results struct {
+  Votes       int
+  Democrat    Vote
+  Republican  Vote
+  Difference  int
+  Outcome     string
+}
+
 func main() {
   // Check to ensure the right number of arguments
-  if len(os.Args) != 4 {
+  if len(os.Args) != 5 {
     fmt.Println("Usage: vote-sim population days encounter-per-day")
     os.Exit(1)
   }
@@ -35,6 +49,12 @@ func main() {
     os.Exit(1)
   }
   rate, err := strconv.Atoi(os.Args[3])
+  // Check if error occured
+  if err != nil {
+    fmt.Println(err)
+    os.Exit(1)
+  }
+  runs, err := strconv.Atoi(os.Args[4])
   // Check if error occured
   if err != nil {
     fmt.Println(err)
@@ -107,6 +127,9 @@ func main() {
   } else {
     fmt.Println("loss")
   }
+}
+go func runSim() {
+
 }
 
 func calcVote(vote VoteStats, chance, side int) (rep, dem int) {
